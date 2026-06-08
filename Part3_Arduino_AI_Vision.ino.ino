@@ -3,8 +3,7 @@
 #include <LiquidCrystal.h>
 
 // Nhúng "bộ não" AI đã train từ Python
-// (Lưu ý: Tên file vẫn là 7mau do code Python cũ sinh ra, nhưng bên trong đã chứa 8 class)
-#include "ColorModel_7mau.h"
+#include "ColorModel_8mau.h"
 
 // 1. Khởi tạo màn hình LCD Keypad Shield (Các chân mặc định)
 LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
@@ -57,7 +56,7 @@ void setup() {
     } else {
         lcd.setCursor(0, 1);
         lcd.print("Sensor Error!   ");
-        while (1); // Treo máy nếu cắm sai dây I2C
+        while (1); 
     }
 
     lcd.clear();
@@ -104,7 +103,7 @@ void loop() {
 // 1. AI suy luận ra số thứ tự (0 đến 7)
         int classIdx = clf.predict(features); 
         
-        // 2. Từ điển 8 nhãn mới (ĐÃ SẮP XẾP LẠI CHUẨN A-Z THEO PYTHON)
+        // 2. Từ điển 8 nhãn 
         String classNames[] = {"Background", "Blue", "Green", "Pink", "Purple", "Red", "White", "Yellow"};
         
         // Lấy tên màu ban đầu do AI đoán
@@ -130,7 +129,6 @@ void loop() {
             colorName = "Unknown";
         }
         
-        // Lọc nhiễu tối: Vì bạn không còn học màu Đen nữa, nên mọi thứ quá tối
         // đập vào cảm biến đều sẽ tự động bị gán thành Unknown
         if (r < 15 && g < 15 && b < 15) {
             colorName = "Unknown";
